@@ -1,0 +1,31 @@
+# Anexa financaspro.zip (o código da versão, com a pasta financaspro/) a cada release.
+# Nome fixo: releases/latest/download/financaspro.zip sempre aponta para a última versão,
+# que é o link do botão "Baixar .zip" em rotalabs.co/labs/financaspro e do docs/LOCAL.md.
+name: Zip da release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag da release (ex.: v1.0.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-24.04
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Montar e anexar
+        run: |
+          git archive --format=zip --prefix=financaspro/ -o financaspro.zip "$TAG"
+          gh release upload "$TAG" financaspro.zip --clobber

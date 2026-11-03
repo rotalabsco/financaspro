@@ -23,7 +23,7 @@ Next.js 16 (App Router) · TypeScript · Tailwind CSS · Recharts · Drizzle ORM
 
 ### No seu computador (recomendado)
 
-Precisa só do [Docker Desktop](https://www.docker.com/products/docker-desktop/). Na pasta do FinancasPro:
+Precisa só do [Docker Desktop](https://www.docker.com/products/docker-desktop/). Baixe o [financaspro.zip](https://github.com/rotalabsco/financaspro/releases/latest/download/financaspro.zip) (ou clone o repositório) e, na pasta do FinancasPro:
 
 ```bash
 docker compose up -d --build

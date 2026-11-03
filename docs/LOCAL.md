@@ -5,7 +5,7 @@ O jeito mais simples e privado de usar: o app e o banco rodam no seu computador 
 ## Do que você precisa
 
 - **Docker Desktop** ([Windows, Mac ou Linux](https://www.docker.com/products/docker-desktop/)). Instale e deixe aberto.
-- O código do FinancasPro: baixe o ZIP em [github.com/rotalabsco/financaspro](https://github.com/rotalabsco/financaspro) (botão **Code → Download ZIP**) e descompacte. Quem usa git pode fazer `git clone https://github.com/rotalabsco/financaspro.git`.
+- O código do FinancasPro: baixe o [**financaspro.zip** da última versão](https://github.com/rotalabsco/financaspro/releases/latest/download/financaspro.zip) e descompacte. Quem usa git pode fazer `git clone https://github.com/rotalabsco/financaspro.git`.
 
 ## Instalar e abrir
 
@@ -58,7 +58,7 @@ docker compose exec db pg_restore -U financaspro -d financaspro --clean --if-exi
 
 Faça um backup antes. Depois:
 
-- **Se baixou o ZIP:** baixe o novo, descompacte e substitua os arquivos da pasta.
+- **Se baixou o ZIP:** baixe o [financaspro.zip](https://github.com/rotalabsco/financaspro/releases/latest/download/financaspro.zip) de novo, descompacte e substitua os arquivos da pasta. As novidades de cada versão ficam em [Releases](https://github.com/rotalabsco/financaspro/releases).
 - **Se usou git:** rode `git pull`.
 
 Em seguida:
