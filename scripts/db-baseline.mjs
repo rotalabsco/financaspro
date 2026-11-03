@@ -27,7 +27,7 @@ if (first?.tag !== "0000_baseline") {
 }
 const hash = createHash("sha256").update(readFileSync(`drizzle/${first.tag}.sql`)).digest("hex");
 
-const local = /@(localhost|127\.0\.0\.1)[:/]/.test(url);
+const local = /@(localhost|127\.0\.0\.1)[:/]/.test(url) || /[?&]sslmode=disable(&|$)/.test(url);
 const client = new pg.Client({ connectionString: url, ssl: local ? undefined : { rejectUnauthorized: true } });
 await client.connect();
 try {

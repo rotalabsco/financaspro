@@ -1,6 +1,8 @@
 # Hospedar o FinancasPro
 
-O app é um Next.js comum com PostgreSQL. Roda em qualquer lugar que execute Node.js 22+: VPS, Docker, ou hospedagens com "app Node.js".
+Para acessar o FinancasPro de qualquer lugar (celular, outro computador). Se o uso é só num computador, prefira a [instalação local](LOCAL.md): é mais simples e os dados não saem dele.
+
+O app é um Next.js comum com PostgreSQL. Roda em qualquer lugar que execute Node.js 22+: VPS, Docker, ou hospedagens com "app Node.js". **Use sempre HTTPS**: num servidor, o login e os seus dados passam pela internet.
 
 ## 1. Banco de dados
 

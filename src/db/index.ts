@@ -13,10 +13,13 @@ function hostOf(url: string): string {
   return url.match(/@([^/?:]+)/)?.[1] ?? "";
 }
 
-/** SSL verificado fora do Postgres local. */
+/**
+ * SSL verificado fora do Postgres local. `sslmode=disable` na URL desliga: é o caso do
+ * banco na rede interna do Docker (docker-compose.yml), que não sai do computador.
+ */
 function sslFor(url: string): { rejectUnauthorized: boolean } | undefined {
   const host = hostOf(url);
-  if (host === "localhost" || host === "127.0.0.1") return undefined;
+  if (host === "localhost" || host === "127.0.0.1" || /[?&]sslmode=disable(&|$)/.test(url)) return undefined;
   return process.env.NODE_ENV === "production" ? { rejectUnauthorized: true } : undefined;
 }
 
