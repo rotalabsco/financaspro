@@ -26,9 +26,10 @@ function monthKey(m: { year: number; month: number }): number {
 /**
  * Mês exibido ao carregar / F5: após o último mês fechado (ex.: abr/26 se mar/26 fechou),
  * senão o mais recente (cronologicamente) ainda aberto com lançamentos conciliados
- * (ex.: mar/26 com dados, não out/2028 vazio).
+ * (ex.: mar/26 com dados, não out/2028 vazio), senão o mês do calendário (quem começou
+ * agora e já lançou parcelas que criaram meses futuros), senão o aberto mais recente.
  */
-export function computeDefaultMonthIndex(months: MonthListItem[]): number {
+export function computeDefaultMonthIndex(months: MonthListItem[], now: Date = new Date()): number {
   if (months.length === 0) return 0;
 
   type Enriched = MonthListItem & {
@@ -64,6 +65,11 @@ export function computeDefaultMonthIndex(months: MonthListItem[]): number {
     const best = openWithRecon.reduce((a, b) => (a.key > b.key ? a : b));
     return best.idx;
   }
+
+  const current = chrono.find(
+    (m) => !m.isClosed && m.year === now.getFullYear() && m.month === now.getMonth() + 1
+  );
+  if (current) return current.idx;
 
   const openMonths = chrono.filter((m) => !m.isClosed);
   if (openMonths.length > 0) {
