@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Next.js
+.next/
+out/
+
+# Build
+build/
+dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Testing
+coverage/
+.nyc_output
+
+# TypeScript
+tsconfig.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Prisma (migrations devem ser commitadas para deploy em produção)
+# prisma/migrations/
+
+# Epic Local
+.ai/completed/*.md
+!.ai/completed/.gitkeep
+
+lovable/
+dump/
+
+# Dumps e backups do banco (dados pessoais)
+backup/
+*.dump
+
+# Material pessoal e de ferramentas locais (não versionar)
+*.pdf
+*.xlsm
+*.xlsx
+prompt-final.md
+task-spec.md
+.claude/
+.cursor/
+.ai/context.md
+.ai/roadmap.md
+docs/HOSTING.md

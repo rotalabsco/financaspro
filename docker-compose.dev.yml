@@ -1,0 +1,23 @@
+# Postgres local para desenvolvimento (npm run db:local:up).
+# Nunca aponte o dev para o banco de produção: o predev bloqueia hosts remotos.
+# Porta 5434 para não colidir com um Postgres já instalado na 5432.
+services:
+  db:
+    image: postgres:17
+    container_name: financaspro-db
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5434:5432"
+    environment:
+      POSTGRES_DB: financaspro
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - financaspro-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d financaspro"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  financaspro-pgdata:

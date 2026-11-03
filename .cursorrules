@@ -1,0 +1,155 @@
+# FinancasPro — Regras para IAs
+# Stack: Next.js 16 App Router + TypeScript + Drizzle ORM + PostgreSQL + Better Auth + Tailwind
+# Metodologia: Epic Local (D:/Projetos-IA/_blueprint/)
+
+## Missão
+Você está trabalhando no FinancasPro — mini SaaS pessoal de controle financeiro (Previsto x Realizado).
+Antes de qualquer ação, leia `.ai/context.md` e `.ai/roadmap.md`.
+
+---
+
+## PENSE ANTES DE AGIR
+
+SEMPRE explique o plano em português antes de modificar arquivos.
+Nunca faça alterações silenciosas. Aguarde confirmação.
+
+```
+❌ [altera diretamente 5 arquivos]
+✅ "Vou modificar:
+   1. src/app/api/transactions/route.ts — motivo X
+   2. src/components/dashboard/TransactionRow.tsx — motivo Y
+   Posso prosseguir?"
+```
+
+---
+
+## Arquitetura do Projeto
+
+### Estrutura de Rotas (App Router)
+```
+src/app/
+├── (auth)/login/           # Página de login
+├── (dashboard)/            # Rotas protegidas pelo proxy (src/proxy.ts)
+│   └── dashboard/          # Dashboard, Previsão, Resumo, Categorias, Fechamento, Config
+│       ├── categorias/
+│       ├── config/
+│       ├── fechamento/
+│       ├── previsao/
+│       └── resumo/
+└── api/                    # API Routes serverless
+    ├── auth/               # Login/logout (iron-session)
+    ├── transactions/       # CRUD de lançamentos
+    ├── months/             # Gestão de meses
+    ├── categories/         # CRUD de categorias
+    ├── vaults/             # Cofres
+    ├── investments/        # Módulo de investimentos
+    ├── bank-accounts/      # Contas bancárias
+    ├── credit-cards/       # Cartões de crédito
+    ├── previsao/           # Geração de previsão
+    ├── media-historica/    # Média histórica por categoria
+    ├── summary/            # Resumo anual
+    └── import/             # Importação de planilha/PDF
+```
+
+### Banco de Dados
+- **ORM:** Drizzle ORM (node-postgres) com PostgreSQL
+- **Schema:** `src/db/schema.ts` (tabelas), `src/db/relations.ts`, `src/db/enums.ts` — fonte da verdade
+- **Migrations:** `npm run db:generate` (gera em `drizzle/`) | `npm run db:deploy` (aplica) | `npm run db:seed`
+- Nunca edite dados diretamente — use as API Routes ou `db:seed`
+
+### Autenticação
+- **Lib:** Better Auth (`src/lib/auth.ts`), sessão no banco + cookie de cache assinado
+- O proxy (`src/proxy.ts`, antigo middleware) valida a sessão de forma criptográfica; só a presença do cookie nunca basta
+- Rotas que precisam do usuário: `getSession()` de `src/lib/session.ts`
+- Sem cadastro público: primeiro usuário em `/setup` (só com banco sem usuários)
+
+### Componentes
+- `src/components/dashboard/` — componentes do dashboard principal
+- `src/components/layout/` — Sidebar e layout
+- `src/components/ui/` — componentes base (não modifique sem necessidade)
+- `src/components/investments/` — módulo de investimentos
+- `src/components/settings/` — configurações
+
+---
+
+## Regras de Código
+
+### TypeScript
+- Strict mode ativo — sem `any`, sem type assertions desnecessárias
+- Props de componentes sempre tipadas com interface
+- Tipos de domínio alinhados com `src/db/schema.ts` (`typeof tabela.$inferSelect`)
+
+### Drizzle
+- Use `db.transaction(async (tx) => ...)` para operações que afetam várias tabelas
+- Use o cliente (`@/db`) só no servidor (API Routes, `src/lib`) — nunca em componente cliente
+- Após alterar `src/db/schema.ts`, rode `npm run db:generate` e revise o SQL gerado
+- Migrations só aditivas: nada de DROP/RENAME de coluna com dados
+- `inArray(col, [])` e `insert().values([])` lançam erro: proteja listas que podem ser vazias
+
+### API Routes
+- Retorno sempre `NextResponse.json()` com status code explícito
+- Validação de input com Zod
+- Erros de banco tratados com try/catch e log
+
+### Tailwind
+- Use classes Tailwind, não CSS inline
+- Componentes com `cn()` (clsx + tailwind-merge)
+
+### Arquivos
+- Componentes: PascalCase (`TransactionRow.tsx`)
+- Utilitários/hooks: camelCase (`useMonth.ts`)
+- Máximo 300 linhas por arquivo
+
+---
+
+## Modelos de Dados Principais
+
+```
+Month          — mês financeiro (RASCUNHO → ATIVO → FECHADO)
+Transaction    — lançamento (previsto + realizado, tipo: RECORRENTE/PARCELADO/A_VISTA)
+Category       — categorias com tipo padrão (FIXO/VARIAVEL/RECORRENTE/COFRE)
+Vault          — cofres com depósito mensal e snapshots
+BankAccount    — contas bancárias
+CreditCard     — cartões de crédito
+Investment     — ativos de investimento (ações, FII, ETF, crypto, renda fixa)
+InvestmentOperation — operações de compra/venda/dividendo
+CryptoSwap     — trocas entre criptomoedas
+DividendRecord — histórico de proventos
+```
+
+---
+
+## Proibições Absolutas
+- ❌ Não commite `.env` ou `.env.local`
+- ❌ Não use `console.log` em produção — remova antes do commit
+- ❌ Não modifique `src/db/schema.ts` sem gerar migration (`db:generate`)
+- ❌ Nunca rode `drizzle-kit push` contra produção
+- ❌ Não instale pacotes sem confirmar com o usuário
+- ❌ Não altere o seed sem avisar — ele é destrutivo
+
+---
+
+## Workflow Epic Local
+
+```
+1. Leia .ai/context.md e .ai/roadmap.md
+2. Escreva spec em .ai/specs/ISSUE-XXX-nome.md
+3. git checkout -b feature/ISSUE-XXX-nome
+4. Implemente
+5. npm run build && npm run lint
+6. Commit e mova spec para .ai/completed/
+```
+
+---
+
+## Comandos Úteis
+
+```bash
+npm run dev          # Desenvolvimento (localhost:3000)
+npm run build        # Verificar erros de tipo e build
+npm run lint         # ESLint
+npm run db:generate  # Gerar migration a partir do schema
+npm run db:deploy    # Aplicar migrations pendentes
+npm run db:seed      # Popular banco com dados iniciais
+npm run db:studio    # Drizzle Studio (visualizar banco)
+```
