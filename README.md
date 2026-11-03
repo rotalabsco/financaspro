@@ -2,7 +2,7 @@
 
 Controle financeiro pessoal e familiar com ciclo **Previsto × Realizado**. Substitui a planilha: prevê o mês seguinte (recorrentes e parcelas), registra o que foi pago e fecha o mês com o saldo do banco.
 
-Feito para ser **hospedado por você**: uma instalação atende uma pessoa ou uma família, e todos os usuários de uma instalação veem os mesmos dados.
+**Seus dados ficam com você.** O FinancasPro roda no seu próprio computador, com banco local: nada vai para a nuvem e ninguém de fora tem acesso. Quem quiser acessar online pode hospedar num servidor próprio. Uma instalação atende uma pessoa ou uma família, e todos os usuários de uma instalação veem os mesmos dados.
 
 ## O que faz
 
@@ -19,9 +19,25 @@ Feito para ser **hospedado por você**: uma instalação atende uma pessoa ou um
 
 Next.js 16 (App Router) · TypeScript · Tailwind CSS · Recharts · Drizzle ORM · PostgreSQL · Better Auth.
 
-## Rodar localmente
+## Como usar
 
-Requisitos: Node.js 22+, Docker (para o Postgres de desenvolvimento).
+### No seu computador (recomendado)
+
+Precisa só do [Docker Desktop](https://www.docker.com/products/docker-desktop/). Na pasta do FinancasPro:
+
+```bash
+docker compose up -d --build
+```
+
+Depois abra <http://localhost:3000/setup> e crie a sua conta. O app só aceita conexões do próprio computador e o banco não fica exposto. Backup, atualização e problemas comuns: [docs/LOCAL.md](docs/LOCAL.md).
+
+### Num servidor (acesso online)
+
+Para usar no celular ou fora de casa: qualquer servidor com Node.js 22+ e PostgreSQL, atrás de HTTPS. Veja [docs/INSTALACAO.md](docs/INSTALACAO.md).
+
+## Desenvolvimento
+
+Requisitos: Node.js 22+ e Docker (para o Postgres de desenvolvimento).
 
 ```bash
 npm install
@@ -35,10 +51,6 @@ npm run dev
 Acesse <http://localhost:3000/setup> e crie o primeiro usuário (a tela só funciona enquanto não existe nenhum). Depois, entre por `/login`.
 
 O `predev` recusa qualquer banco que não seja local, para o dev nunca escrever no banco de produção.
-
-## Hospedar
-
-Veja [docs/INSTALACAO.md](docs/INSTALACAO.md).
 
 ## Testes
 

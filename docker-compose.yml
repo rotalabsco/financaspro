@@ -1,0 +1,46 @@
+# FinancasPro no seu computador: app + banco, acessível só por este computador.
+#
+#   docker compose up -d --build     # instalar / atualizar e iniciar
+#   docker compose stop              # parar (os dados ficam)
+#
+# Detalhes, backup e restauração: docs/LOCAL.md
+name: financaspro-local
+
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: financaspro
+      POSTGRES_USER: financaspro
+      # O banco não publica porta: só o app, na rede interna do Docker, chega até ele.
+      POSTGRES_PASSWORD: financaspro
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U financaspro -d financaspro"]
+      interval: 5s
+      retries: 20
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      # 127.0.0.1: só este computador abre o app; ninguém da rede (Wi-Fi) alcança.
+      - "127.0.0.1:${FINANCASPRO_PORT:-3000}:${FINANCASPRO_PORT:-3000}"
+    environment:
+      PORT: ${FINANCASPRO_PORT:-3000}
+      DATABASE_URL: postgresql://financaspro:financaspro@db:5432/financaspro?sslmode=disable
+      DIRECT_URL: postgresql://financaspro:financaspro@db:5432/financaspro?sslmode=disable
+      BETTER_AUTH_URL: http://localhost:${FINANCASPRO_PORT:-3000}
+      BETTER_AUTH_TRUSTED_ORIGINS: http://127.0.0.1:${FINANCASPRO_PORT:-3000}
+      APP_TIMEZONE: ${APP_TIMEZONE:-America/Sao_Paulo}
+    volumes:
+      - app-data:/app/data
+
+volumes:
+  db-data:
+  app-data:

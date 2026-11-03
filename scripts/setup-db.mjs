@@ -29,7 +29,7 @@ if (!url) {
   process.exit(1);
 }
 
-const local = /@(localhost|127\.0\.0\.1)[:/]/.test(url);
+const local = /@(localhost|127\.0\.0\.1)[:/]/.test(url) || /[?&]sslmode=disable(&|$)/.test(url);
 const client = new pg.Client({ connectionString: url, ssl: local ? undefined : { rejectUnauthorized: true } });
 await client.connect();
 const { rows } = await client.query(
