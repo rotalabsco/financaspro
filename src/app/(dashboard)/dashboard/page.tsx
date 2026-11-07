@@ -34,7 +34,7 @@ function EmptyDashboardState({
     }
   };
   return (
-    <div className="p-6 max-w-2xl">
+    <div className="md:p-6 max-w-2xl">
       <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
       <p className="mt-4 text-muted-foreground">
         Nenhum mês cadastrado. Crie o primeiro mês para começar a registrar suas
@@ -140,7 +140,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="md:p-4 space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold text-foreground">Visão Geral</h1>
         <span className="text-sm text-muted-foreground">

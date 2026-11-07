@@ -524,7 +524,7 @@ export default function IRPFPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
             Declaracao IRPF
@@ -603,7 +603,7 @@ export default function IRPFPage() {
           <p className="text-sm text-muted-foreground">
             Posicao em 31/12/{irpfYear} para declaracao de Bens e Direitos no IRPF.
           </p>
-          <div className="card-surface overflow-hidden">
+          <div className="card-surface overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -712,7 +712,7 @@ export default function IRPFPage() {
             </div>
           </div>
 
-          <div className="card-surface overflow-hidden">
+          <div className="card-surface overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">

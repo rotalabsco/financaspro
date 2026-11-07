@@ -81,7 +81,7 @@ function EmptyLancamentosState({
     }
   };
   return (
-    <div className="p-6">
+    <div className="md:p-6">
       <h1 className="text-2xl font-bold text-foreground">Lançamentos</h1>
       <p className="mt-4 text-muted-foreground">
         Nenhum mês cadastrado. Crie o primeiro mês para começar a registrar suas
@@ -535,12 +535,12 @@ export default function LancamentosPage() {
   ) as (VaultWithBalance & { currentBalance: number })[];
 
   return (
-    <div className="p-4 flex flex-col">
-      <div className="flex items-center justify-between mb-3 shrink-0">
+    <div className="md:p-4 flex flex-col">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-3 shrink-0">
         <span className="text-muted-foreground text-sm">
           {month ? `${statusLabels[month.status] ?? month.status}` : ""}
         </span>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end [&>*]:text-center [&>*]:whitespace-nowrap">
           <button
             type="button"
             onClick={() => {

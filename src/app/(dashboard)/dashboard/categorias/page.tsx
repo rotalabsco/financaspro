@@ -262,7 +262,7 @@ export default function CategoriasPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h1 className="text-2xl font-semibold text-foreground">
           Gestão de Categorias
         </h1>
@@ -274,7 +274,7 @@ export default function CategoriasPage() {
           Nova Categoria
         </button>
       </div>
-      <div className="card-surface overflow-hidden">
+      <div className="card-surface overflow-x-auto">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}

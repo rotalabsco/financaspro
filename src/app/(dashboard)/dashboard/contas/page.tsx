@@ -179,8 +179,8 @@ export default function ContasPage() {
   }
 
   return (
-    <div className="p-4">
-      <div className="flex items-center justify-between mb-6">
+    <div className="md:p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h1 className="text-xl font-semibold text-foreground">
           Contas Bancárias
         </h1>
@@ -197,7 +197,7 @@ export default function ContasPage() {
         Contas usadas para registrar em qual conta a receita foi creditada.
       </p>
 
-      <div className="rounded-xl border border-border overflow-hidden bg-card">
+      <div className="rounded-xl border border-border overflow-x-auto bg-card">
         {accounts.length === 0 ? (
           <p className="px-4 py-8 text-center text-muted-foreground">
             Nenhuma conta cadastrada. Crie a primeira para usar em lançamentos de receita.

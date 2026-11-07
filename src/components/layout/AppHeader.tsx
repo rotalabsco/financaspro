@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useMonth } from "@/contexts/MonthContext";
-import { ChevronLeft, ChevronRight, ChevronDown, LogOut } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronDown, LogOut, Menu } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signOut } from "@/lib/auth-client";
 
@@ -11,7 +11,7 @@ const MONTHS = [
   "Jul", "Ago", "Set", "Out", "Nov", "Dez",
 ];
 
-export function AppHeader() {
+export function AppHeader({ onMenuClick }: { onMenuClick: () => void }) {
   const router = useRouter();
   const { year, month, months, goPrev, goNext, setYearMonth, refetchMonths } = useMonth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -56,8 +56,17 @@ export function AppHeader() {
 
   return (
     <header className="sticky top-0 z-10 glass border-b border-border">
-      <div className="flex items-center justify-between h-14 px-6">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between h-14 px-2 sm:px-4 md:px-6">
+        <div className="flex items-center gap-1 sm:gap-4 min-w-0">
+          <button
+            type="button"
+            onClick={onMenuClick}
+            className="p-2 rounded-lg hover:bg-[hsl(var(--surface-hover))] text-muted-foreground hover:text-foreground transition-colors md:hidden"
+            aria-label="Abrir menu"
+            aria-controls="app-sidebar"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
           <div className="flex items-center gap-1">
             <button
               type="button"
@@ -71,7 +80,7 @@ export function AppHeader() {
               <button
                 type="button"
                 onClick={() => setDropdownOpen((o) => !o)}
-                className="flex items-center gap-1 min-w-[120px] px-2 py-1.5 rounded-lg hover:bg-[hsl(var(--surface-hover))] font-semibold text-foreground"
+                className="flex items-center gap-1 sm:min-w-[120px] px-2 py-1.5 whitespace-nowrap rounded-lg hover:bg-[hsl(var(--surface-hover))] font-semibold text-foreground"
               >
                 <span>{label}</span>
                 <ChevronDown className="w-4 h-4 text-muted-foreground" />

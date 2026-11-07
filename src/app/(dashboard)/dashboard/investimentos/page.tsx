@@ -1175,7 +1175,7 @@ export default function InvestimentosPage() {
             )}
           </div>
 
-          <div className="card-surface overflow-hidden">
+          <div className="card-surface overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -1393,7 +1393,7 @@ export default function InvestimentosPage() {
                   </ResponsiveContainer>
                 </div>
               </div>
-              <div className="card-surface overflow-hidden">
+              <div className="card-surface overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -1496,7 +1496,7 @@ export default function InvestimentosPage() {
                   </ResponsiveContainer>
                 </div>
               </div>
-              <div className="card-surface overflow-hidden">
+              <div className="card-surface overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -1591,7 +1591,7 @@ export default function InvestimentosPage() {
             </div>
           </div>
 
-          <div className="card-surface overflow-hidden">
+          <div className="card-surface overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -1644,6 +1644,7 @@ export default function InvestimentosPage() {
                       onChange={(e) => setRebalanceContributionInput(e.target.value)}
                       className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                       placeholder="0,00"
+                      inputMode="decimal"
                     />
                   </div>
                   <div>
@@ -1655,7 +1656,7 @@ export default function InvestimentosPage() {
                 </div>
               </div>
 
-              <div className="card-surface overflow-hidden">
+              <div className="card-surface overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -1726,7 +1727,7 @@ export default function InvestimentosPage() {
             </div>
           </div>
 
-          <div className="card-surface overflow-hidden">
+          <div className="card-surface overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -1753,7 +1754,7 @@ export default function InvestimentosPage() {
             </table>
           </div>
 
-          <div className="card-surface overflow-hidden">
+          <div className="card-surface overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border text-left text-xs text-muted-foreground">
@@ -2197,6 +2198,7 @@ function AddInvestmentModal({
                     onChange={(e) => setInitialAmount(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                     placeholder="0,00"
+                    inputMode="decimal"
                   />
                 </div>
                 <div>
@@ -2207,6 +2209,7 @@ function AddInvestmentModal({
                     onChange={(e) => setInitialFee(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                     placeholder="0,00"
+                    inputMode="decimal"
                   />
                 </div>
                 <div className="col-span-2">
@@ -2249,6 +2252,7 @@ function AddInvestmentModal({
                     onChange={(e) => setInitialUnitPrice(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                     placeholder="0,00"
+                    inputMode="decimal"
                   />
                 </div>
                 <div>
@@ -2259,6 +2263,7 @@ function AddInvestmentModal({
                     onChange={(e) => setInitialFee(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                     placeholder="0,00"
+                    inputMode="decimal"
                   />
                 </div>
                 <div className="col-span-2">
@@ -2461,6 +2466,7 @@ function AddOperationModal({
                   onChange={(e) => setAmount(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                   placeholder="0,00"
+                  inputMode="decimal"
                   required
                 />
                 <p className="text-xs text-muted-foreground mt-1">
@@ -2475,6 +2481,7 @@ function AddOperationModal({
                   onChange={(e) => setFee(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                   placeholder="0,00"
+                  inputMode="decimal"
                 />
               </div>
               <div className="w-full px-3 py-2 rounded-lg bg-muted/50 border border-border font-mono text-foreground text-sm">
@@ -2519,6 +2526,7 @@ function AddOperationModal({
                     onChange={(e) => setUnitPrice(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                     placeholder="0,00"
+                    inputMode="decimal"
                     required
                   />
                 </div>
@@ -2532,6 +2540,7 @@ function AddOperationModal({
                     onChange={(e) => setFee(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                     placeholder="0,00"
+                    inputMode="decimal"
                   />
                 </div>
                 <div>
@@ -2727,6 +2736,7 @@ function EditInvestmentModal({
               onChange={(e) => setCurrentUnitPrice(e.target.value)}
               className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
               placeholder="0,00"
+              inputMode="decimal"
               required
             />
           </div>
@@ -2937,6 +2947,7 @@ function EditOperationModal({
                   onChange={(e) => setAmount(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                   placeholder="0,00"
+                  inputMode="decimal"
                   required
                 />
               </div>
@@ -2948,6 +2959,7 @@ function EditOperationModal({
                   onChange={(e) => setFee(e.target.value)}
                   className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                   placeholder="0,00"
+                  inputMode="decimal"
                 />
               </div>
             </>
@@ -2995,6 +3007,7 @@ function EditOperationModal({
                     onChange={(e) => setFee(e.target.value)}
                     className="w-full px-3 py-2 rounded-lg border border-border bg-background text-foreground font-mono"
                     placeholder="0,00"
+                    inputMode="decimal"
                   />
                 </div>
               </div>

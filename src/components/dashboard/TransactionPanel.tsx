@@ -65,15 +65,15 @@ export function TransactionPanel({
                 Nenhum lançamento
               </p>
             ) : (
-              <table className="w-full table-fixed">
-                <colgroup>
+              <table className="w-full table-fixed max-md:block">
+                <colgroup className="max-md:hidden">
                   <col style={{ width: "38%" }} />
                   <col style={{ width: "18%" }} />
                   <col style={{ width: "9rem" }} />
                   <col style={{ width: "auto" }} />
                   <col style={{ width: "5rem" }} />
                 </colgroup>
-                <thead>
+                <thead className="max-md:hidden">
                   <tr className="text-xs text-muted-foreground">
                     <th className="py-2.5 px-3 text-left font-medium">Descrição</th>
                     <th className="py-2.5 px-3 text-left font-medium">Categoria</th>
@@ -82,7 +82,7 @@ export function TransactionPanel({
                     <th className="py-2.5 px-3 w-[5rem]"></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="max-md:block">
                   {transactions.map((t) => (
                     <TransactionRow
                       key={t.id}
@@ -99,15 +99,15 @@ export function TransactionPanel({
                     />
                   ))}
                 </tbody>
-                <tfoot>
-                  <tr className="bg-background border-t border-border">
+                <tfoot className="max-md:block">
+                  <tr className="bg-background border-t border-border max-md:flex max-md:items-center max-md:justify-between">
                     <td colSpan={2} className="py-2.5 px-3 text-sm text-muted-foreground font-medium">
                       Sub-total
                     </td>
                     <td className="py-2.5 px-3 text-right text-sm font-semibold text-foreground tabular-nums">
                       {formatCurrency(totalValor)}
                     </td>
-                    <td colSpan={2} className="py-2.5 px-3"></td>
+                    <td colSpan={2} className="py-2.5 px-3 max-md:hidden"></td>
                   </tr>
                 </tfoot>
               </table>

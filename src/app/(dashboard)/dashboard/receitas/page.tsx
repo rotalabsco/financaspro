@@ -337,6 +337,7 @@ function ReceitasPageInner() {
                 onChange={(e) => setAmount(e.target.value)}
                 className="w-full px-3 py-2 rounded-lg bg-background border border-border"
                 placeholder="0,00"
+                inputMode="decimal"
                 required
               />
             </div>

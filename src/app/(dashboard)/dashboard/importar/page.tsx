@@ -103,7 +103,7 @@ export default function ImportarPage() {
   }, [preview, selectedMonths]);
 
   return (
-      <div className="space-y-6 animate-slide-in p-6">
+      <div className="space-y-6 animate-slide-in md:p-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
             Importar Histórico

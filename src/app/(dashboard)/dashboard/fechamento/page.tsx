@@ -242,6 +242,7 @@ function FechamentoContent() {
                     value={accountBalances[account.id] ?? ""}
                     onChange={(e) => handleBalanceChange(account.id, e.target.value)}
                     placeholder="0,00"
+                    inputMode="decimal"
                     className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground font-mono-nums"
                   />
                 </div>

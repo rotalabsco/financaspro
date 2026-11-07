@@ -524,6 +524,7 @@ export function AddTransactionModal({
               onChange={(e) => setAmount(e.target.value)}
               className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground font-mono-nums"
               placeholder="3550 ou 35,50"
+              inputMode="decimal"
               required
             />
             {!isEdit && (
