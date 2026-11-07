@@ -147,6 +147,7 @@ function CreditCardFormModal({
               onChange={(e) => setCreditLimit(e.target.value)}
               className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground font-mono-nums"
               placeholder="0,00"
+              inputMode="decimal"
             />
           </div>
           <div className="flex gap-2 pt-2">
@@ -223,8 +224,8 @@ export default function CartoesPage() {
   }
 
   return (
-    <div className="p-4">
-      <div className="flex items-center justify-between mb-6">
+    <div className="md:p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h1 className="text-xl font-semibold text-foreground">
           Cartões de Crédito
         </h1>
@@ -249,7 +250,7 @@ export default function CartoesPage() {
         Cartões usados para registrar despesas parceladas ou à vista no crédito.
       </p>
 
-      <div className="rounded-xl border border-border overflow-hidden bg-card">
+      <div className="rounded-xl border border-border overflow-x-auto bg-card">
         {cards.length === 0 ? (
           <p className="px-4 py-8 text-center text-muted-foreground">
             Nenhum cartão cadastrado. Crie o primeiro para usar em lançamentos de despesa.

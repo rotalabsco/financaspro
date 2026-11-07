@@ -25,6 +25,7 @@ import {
   Banknote,
   CalendarRange,
   CodeXml,
+  X,
 } from "lucide-react";
 import { SOURCE_URL } from "@/lib/source-url";
 
@@ -52,7 +53,13 @@ interface UserData {
   name?: string;
 }
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  /** Gaveta aberta (só tem efeito abaixo de md). */
+  mobileOpen: boolean;
+  onMobileClose: () => void;
+}
+
+export function AppSidebar({ mobileOpen, onMobileClose }: AppSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
@@ -65,6 +72,22 @@ export function AppSidebar() {
       .catch(() => {});
   }, []);
 
+  // Gaveta aberta: Esc fecha e a página de trás não rola.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onMobileClose();
+    document.addEventListener("keydown", onKey);
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = overflow;
+    };
+  }, [mobileOpen, onMobileClose]);
+
+  // Na gaveta (mobile) os rótulos aparecem sempre; "recolher" é coisa do desktop.
+  const showLabels = !collapsed || mobileOpen;
+
   const handleLogout = async () => {
     await signOut();
     router.push("/login");
@@ -72,19 +95,37 @@ export function AppSidebar() {
   };
 
   return (
+    <>
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={onMobileClose}
+          aria-hidden
+        />
+      )}
     <aside
-      className={`flex flex-col bg-surface border-r border-border transition-all duration-300 ease-smooth shrink-0 ${
-        collapsed ? "w-16" : "w-64"
-      }`}
+      id="app-sidebar"
+      className={`flex flex-col bg-surface border-r border-border shrink-0 transition-[transform,width] duration-300 ease-smooth
+        fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
+        md:sticky md:top-0 md:h-screen md:max-w-none md:translate-x-0 md:z-auto ${collapsed ? "md:w-16" : "md:w-64"}`}
     >
-      <div className="p-4 border-b border-border shrink-0">
+      <div className="flex items-center justify-between p-4 border-b border-border shrink-0">
         <Link
           href="/dashboard"
+          onClick={onMobileClose}
           className="flex items-center gap-2 text-foreground font-semibold"
         >
           <span className="text-primary text-xl">FP</span>
-          {!collapsed && <span>FinancasPro</span>}
+          {showLabels && <span>FinancasPro</span>}
         </Link>
+        <button
+          type="button"
+          onClick={onMobileClose}
+          className="p-2 -m-2 rounded-lg text-muted-foreground hover:text-foreground md:hidden"
+          aria-label="Fechar menu"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
@@ -94,14 +135,16 @@ export function AppSidebar() {
             <Link
               key={href}
               href={href}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+              onClick={onMobileClose}
+              title={showLabels ? undefined : label}
+              className={`flex items-center gap-3 px-3 py-2.5 md:py-2 rounded-lg text-sm transition-colors ${
                 isActive
                   ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-[hsl(var(--surface-hover))] hover:text-foreground"
               }`}
             >
               <Icon className="w-5 h-5 shrink-0" />
-              {!collapsed && <span>{label}</span>}
+              {showLabels && <span>{label}</span>}
             </Link>
           );
         })}
@@ -110,11 +153,11 @@ export function AppSidebar() {
       <div className="p-3 border-t border-border space-y-1">
         <div
           className={`flex items-center gap-3 px-3 py-2 rounded-lg text-muted-foreground ${
-            collapsed ? "justify-center" : ""
+            showLabels ? "" : "justify-center"
           }`}
         >
           <User className="w-5 h-5 shrink-0" />
-          {!collapsed && (
+          {showLabels && (
             <span className="text-xs truncate">
               {user?.name ?? user?.email ?? "Usuário"}
             </span>
@@ -123,26 +166,26 @@ export function AppSidebar() {
         <button
           type="button"
           onClick={handleLogout}
-          className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted-foreground hover:bg-[hsl(var(--surface-hover))] hover:text-foreground transition-colors text-sm ${collapsed ? "justify-center" : ""}`}
+          className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted-foreground hover:bg-[hsl(var(--surface-hover))] hover:text-foreground transition-colors text-sm ${showLabels ? "" : "justify-center"}`}
           title="Sair"
         >
           <LogOut className="w-5 h-5 shrink-0" />
-          {!collapsed && <span>Sair</span>}
+          {showLabels && <span>Sair</span>}
         </button>
         <a
           href={SOURCE_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted-foreground hover:bg-[hsl(var(--surface-hover))] hover:text-foreground transition-colors text-sm ${collapsed ? "justify-center" : ""}`}
+          className={`flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted-foreground hover:bg-[hsl(var(--surface-hover))] hover:text-foreground transition-colors text-sm ${showLabels ? "" : "justify-center"}`}
           title="Código-fonte (AGPL-3.0)"
         >
           <CodeXml className="w-5 h-5 shrink-0" />
-          {!collapsed && <span>Código-fonte</span>}
+          {showLabels && <span>Código-fonte</span>}
         </a>
         <button
           type="button"
           onClick={() => setCollapsed(!collapsed)}
-          className="flex items-center justify-center w-full py-2 rounded-lg text-muted-foreground hover:bg-[hsl(var(--surface-hover))] hover:text-foreground transition-colors"
+          className="hidden md:flex items-center justify-center w-full py-2 rounded-lg text-muted-foreground hover:bg-[hsl(var(--surface-hover))] hover:text-foreground transition-colors"
         >
           {collapsed ? (
             <ChevronRight className="w-5 h-5" />
@@ -155,5 +198,6 @@ export function AppSidebar() {
         </button>
       </div>
     </aside>
+    </>
   );
 }

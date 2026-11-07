@@ -206,7 +206,7 @@ export default function ProjecaoCartoesPage() {
   const temRecorrenteQueSome = meses.some((m, i) => i > 0 && meses[i - 1].recorrentes > 0 && m.recorrentes === 0);
 
   return (
-    <div className="p-4 space-y-6">
+    <div className="md:p-4 space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <h1 className="text-xl font-semibold text-foreground">Projeção de Cartões</h1>

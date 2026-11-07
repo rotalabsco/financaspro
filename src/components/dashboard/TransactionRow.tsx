@@ -116,10 +116,11 @@ export function TransactionRow({
     : null;
 
   return (
-    <tr className="border-b border-border hover:bg-[hsl(var(--surface-hover))]">
-      <td className="py-2.5 px-3 align-middle">
+    // Abaixo de md a linha vira cartão: descrição + valor, categoria + ações, status embaixo.
+    <tr className="border-b border-border hover:bg-[hsl(var(--surface-hover))] max-md:grid max-md:grid-cols-[minmax(0,1fr)_auto] max-md:items-center max-md:gap-x-3 max-md:gap-y-2 max-md:px-3 max-md:py-3">
+      <td className="py-2.5 px-3 align-middle max-md:p-0 max-md:min-w-0">
         <div className="flex items-center gap-2 flex-wrap min-w-0">
-          <span className="font-medium text-foreground shrink-0">
+          <span className="font-medium text-foreground min-w-0 break-words">
             {description}
           </span>
           <span className="inline-flex items-center gap-2 shrink-0">
@@ -155,17 +156,18 @@ export function TransactionRow({
           </span>
         </div>
       </td>
-      <td className="py-2.5 px-3 align-middle">
+      <td className="py-2.5 px-3 align-middle max-md:p-0 max-md:order-3 max-md:min-w-0">
         <CategoryBadge name={categoryName} color={categoryColor} />
       </td>
-      <td className="py-2.5 px-3 align-middle text-right">
+      <td className="py-2.5 px-3 align-middle text-right max-md:p-0 max-md:order-2">
         <div className="flex flex-col items-end gap-0.5 min-w-0">
           <input
             type="text"
             defaultValue={inputDefault}
             placeholder="0"
             title="Valor: não conciliado = previsto, conciliado = realizado"
-            className="w-full max-w-[7rem] text-right px-2 py-1 border border-border rounded bg-background text-foreground tabular-nums text-sm"
+            inputMode="decimal"
+            className="w-full max-w-[7rem] max-md:w-28 text-right px-2 py-1 max-md:py-1.5 border border-border rounded bg-background text-foreground tabular-nums text-sm"
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
           />
@@ -176,7 +178,7 @@ export function TransactionRow({
           )}
         </div>
       </td>
-      <td className="py-2.5 px-3 align-middle">
+      <td className="py-2.5 px-3 align-middle max-md:p-0 max-md:order-5 max-md:col-span-2">
         <div className="flex items-center gap-1.5 flex-wrap min-w-0">
           {transaction.investment &&
             onEditInvestmentDate &&
@@ -246,7 +248,7 @@ export function TransactionRow({
           )}
         </div>
       </td>
-      <td className="py-2.5 px-3 align-middle">
+      <td className="py-2.5 px-3 align-middle max-md:p-0 max-md:order-4">
         <div className="flex items-center justify-end gap-1">
           {isReceita && (
             <Link

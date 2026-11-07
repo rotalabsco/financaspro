@@ -169,6 +169,7 @@ export function CategoryFormModal({
               onChange={(e) => setMonthlyGoal(e.target.value)}
               className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground font-mono-nums"
               placeholder="0,00"
+              inputMode="decimal"
             />
           </div>
 

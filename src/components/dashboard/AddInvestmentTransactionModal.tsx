@@ -217,6 +217,7 @@ export function AddInvestmentTransactionModal({
               onChange={(e) => setAmount(e.target.value)}
               className="w-full px-3 py-2 rounded-lg bg-background border border-border text-foreground font-mono-nums"
               placeholder="600 ou 600,00"
+              inputMode="decimal"
               required
             />
           </div>
